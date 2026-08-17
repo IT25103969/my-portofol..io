@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Nav } from './components/Nav';
 import { HeroSection } from './components/HeroSection';
 import { Marquee } from './components/Marquee';
@@ -36,6 +37,7 @@ export default function App() {
       <SectionReveal>
         <Footer />
       </SectionReveal>
+      <SpeedInsights />
     </div>
   );
 }
