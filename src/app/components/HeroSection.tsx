@@ -237,7 +237,7 @@ export function HeroSection() {
       id="top"
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="relative min-h-screen flex flex-col justify-between px-6 md:px-10 pt-28 md:pt-32 pb-10 md:pb-12 overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col justify-between px-6 md:px-10 pt-28 md:pt-32 pb-10 md:pb-12 overflow-hidden"
     >
       <HeroBg springX={springX} springY={springY} />
 
@@ -287,6 +287,7 @@ export function HeroSection() {
               key={word}
               className="block overflow-hidden pb-[0.06em] cursor-default"
               onMouseEnter={scramble.trigger}
+              onClick={scramble.trigger}
             >
               <motion.span
                 className="inline-block select-none"

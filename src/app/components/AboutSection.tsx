@@ -44,7 +44,7 @@ export function AboutSection() {
                   <img
                     src={portraitImg}
                     alt="Shihaz Shaheem"
-                    className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
+                    className="w-full h-full object-cover object-top md:grayscale hover:grayscale-0 transition-all duration-700"
                   />
                   {/* Subtle overlay label */}
                   <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-white/80 backdrop-blur-sm border-t border-neutral-200">

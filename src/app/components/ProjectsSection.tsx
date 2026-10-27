@@ -9,6 +9,7 @@ interface Project {
   year: string;
   role: string;
   tech: string[];
+  highlights?: string[];
   github?: string;
 }
 
@@ -31,17 +32,23 @@ const projects: Project[] = [
     year: '2025',
     role: 'IoT · Embedded · Firmware',
     tech: ['ESP32-S3', 'Firebase', 'C++', 'Arduino'],
-    github: 'https://github.com/IT25103969',
+    github: 'https://github.com/shihaz6',
   },
   {
     id: 3,
-    title: 'BloodHound AI',
+    title: 'AlchemAI',
     description:
-      'An AI-powered diagnostic assistant that analyses symptoms and patient data to assist in early-stage disease detection — built with a focus on accuracy and clinical usability.',
+      'A local-corpus, retrieval-augmented research assistant. It indexes documents into persistent vector and lexical stores, runs bounded agentic research loops over hybrid retrieval, adjudicates conflicting evidence, and answers with validated citations.',
     year: '2025',
-    role: 'AI · Research · Engineering',
-    tech: ['Python', 'TensorFlow', 'Flask', 'React'],
-    github: 'https://github.com/IT25103969',
+    role: 'AI · RAG · Agentic Systems',
+    tech: ['Python', 'Streamlit', 'ChromaDB', 'BM25', 'Voyage AI', 'OpenRouter'],
+    highlights: [
+      'Hybrid search: Chroma semantic + BM25 lexical, fused with reciprocal-rank fusion and reranked to the top five',
+      'Agent loop capped at four iterations: entity resolution, sufficiency check, conflict adjudication, follow-up queries',
+      'Citation validation against supplied evidence IDs, with a deterministic fallback when generation fails',
+      'Ingests .txt, .md, .docx, .pdf and .csv, with optional OCR for scanned PDFs',
+    ],
+    github: 'https://github.com/shihaz6',
   },
   {
     id: 4,
@@ -51,7 +58,7 @@ const projects: Project[] = [
     year: '2024',
     role: 'Embedded · Computer Vision',
     tech: ['ESP32', 'OpenCV', 'Python', 'C++'],
-    github: 'https://github.com/IT25103969',
+    github: 'https://github.com/shihaz6',
   },
 ];
 
@@ -67,7 +74,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
       className="border-b border-neutral-200"
     >
       <button
-        className="w-full text-left group"
+        className="w-full text-left group min-h-[44px]"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
@@ -147,6 +154,17 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
                 <p className="text-neutral-700 leading-relaxed text-sm md:text-base max-w-2xl">
                   {project.description}
                 </p>
+
+                {project.highlights && (
+                  <ul className="space-y-2 max-w-2xl">
+                    {project.highlights.map((h) => (
+                      <li key={h} className="flex gap-3 text-sm text-neutral-600 leading-relaxed">
+                        <span className="mt-2 h-px w-4 shrink-0 bg-amber-400" />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((t) => (

@@ -37,12 +37,12 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 md:pt-12 border-t border-neutral-800">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 mb-3">Social</p>
-            <div className="space-y-3">
+            <div className="space-y-1 md:space-y-3">
               <a
-                href="https://github.com/IT25103969"
+                href="https://github.com/shihaz6"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-0.5"
+                className="flex items-center gap-2 text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
               >
                 <Github className="w-4 h-4 shrink-0" /> GitHub
               </a>
@@ -50,13 +50,13 @@ export function Footer() {
                 href="https://www.linkedin.com/in/shihaz-shaheem-024679242/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-0.5"
+                className="flex items-center gap-2 text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
               >
                 <Linkedin className="w-4 h-4 shrink-0" /> LinkedIn
               </a>
               <a
                 href="mailto:theshihaz6@gmail.com"
-                className="flex items-center gap-2 text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-0.5"
+                className="flex items-center gap-2 text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
               >
                 <Mail className="w-4 h-4 shrink-0" /> Email
               </a>
@@ -68,19 +68,19 @@ export function Footer() {
             <div className="space-y-3">
               <a
                 href="#about"
-                className="block text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-0.5"
+                className="block text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
               >
                 About
               </a>
               <a
                 href="#skills"
-                className="block text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-0.5"
+                className="block text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className="block text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-0.5"
+                className="block text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
               >
                 Work
               </a>
