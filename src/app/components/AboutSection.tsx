@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import portraitImg from '../../imports/3fb34df4-e0c9-4a95-a628-5d716184faac.jpg';
+import portraitWebp from '../../assets/portrait.webp';
 
 export function AboutSection() {
   return (
@@ -9,8 +10,7 @@ export function AboutSection() {
         <div className="mb-10 md:mb-0 md:grid md:grid-cols-12 md:gap-10">
           <div className="md:col-span-3">
             <div className="md:sticky md:top-32">
-              <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 mb-1">— About</p>
-              <p className="text-sm text-neutral-500">(01)</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">— About (01)</p>
             </div>
           </div>
 
@@ -38,23 +38,30 @@ export function AboutSection() {
                 className="relative shrink-0 self-start md:self-auto w-48 md:w-56 aspect-[3/4]"
               >
                 {/* Offset amber accent block */}
-                <div className="absolute -bottom-2 -right-2 w-full h-full bg-amber-300/30 border border-amber-300/50" />
+                <div aria-hidden="true" className="absolute -bottom-2 -right-2 w-full h-full bg-amber-300/30 border border-amber-300/50" />
                 {/* Image */}
                 <div className="relative w-full h-full overflow-hidden border border-neutral-200">
-                  <img
-                    src={portraitImg}
-                    alt="Shihaz Shaheem"
-                    className="w-full h-full object-cover object-top md:grayscale hover:grayscale-0 transition-all duration-700"
-                  />
+                  <picture>
+                    <source srcSet={portraitWebp} type="image/webp" />
+                    <img
+                      src={portraitImg}
+                      alt="Portrait of Shihaz Shaheem"
+                      width={386}
+                      height={515}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-top md:grayscale hover:grayscale-0 transition-all duration-700"
+                    />
+                  </picture>
                   {/* Subtle overlay label */}
-                  <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-white/80 backdrop-blur-sm border-t border-neutral-200">
+                  <div aria-hidden="true" className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-white/80 backdrop-blur-sm border-t border-neutral-200">
                     <p className="text-[10px] uppercase tracking-[0.18em] text-neutral-500">Shihaz Shaheem</p>
                   </div>
                 </div>
               </motion.div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 text-neutral-700 leading-relaxed text-sm md:text-base">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 text-neutral-700 leading-relaxed text-[15px] md:text-base">
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -62,7 +69,7 @@ export function AboutSection() {
                 viewport={{ once: true }}
               >
                 Currently studying for my BSc (Hons) in Information Technology with a
-                specialization in Artificial Intelligence at the Sri Lanka Institute of
+                specialisation in Artificial Intelligence at the Sri Lanka Institute of
                 Information Technology. My focus sits between research and engineering —
                 shipping work that's both rigorous and refined.
               </motion.p>
@@ -80,10 +87,10 @@ export function AboutSection() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 md:pt-12 border-t border-neutral-200">
               {[
+                { k: 'Founder', v: 'AlchemyX Global' },
                 { k: 'Education', v: 'SLIIT — BSc IT' },
-                { k: 'Specialization', v: 'Artificial Intelligence' },
+                { k: 'Specialisation', v: 'Artificial Intelligence' },
                 { k: 'Location', v: 'Colombo, Sri Lanka' },
-                { k: 'Status', v: 'Open to work' },
               ].map((m, i) => (
                 <motion.div
                   key={m.k}
@@ -94,7 +101,7 @@ export function AboutSection() {
                   whileHover={{ x: 4 }}
                   className="group"
                 >
-                  <p className="text-xs uppercase tracking-[0.15em] text-neutral-400 mb-2 group-hover:text-amber-500 transition-colors duration-300">
+                  <p className="text-sm text-neutral-500 mb-1.5">
                     {m.k}
                   </p>
                   <p className="text-black text-sm md:text-base">{m.v}</p>

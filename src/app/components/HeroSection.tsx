@@ -1,16 +1,16 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react';
 import { ArrowDown } from 'lucide-react';
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-function useScramble(original: string) {
+function useScramble(original: string, disabled = false) {
   const [display, setDisplay] = useState(original);
   const busy = useRef(false);
   const iv = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const trigger = useCallback(() => {
-    if (busy.current) return;
+    if (disabled || busy.current) return;
     busy.current = true;
     let iter = 0;
     iv.current = setInterval(() => {
@@ -29,7 +29,7 @@ function useScramble(original: string) {
         busy.current = false;
       }
     }, 35);
-  }, [original]);
+  }, [original, disabled]);
 
   useEffect(() => () => { if (iv.current) clearInterval(iv.current); }, []);
 
@@ -41,16 +41,18 @@ const wordVariants = {
   visible: (i: number) => ({
     y: 0,
     opacity: 1,
-    transition: { duration: 0.9, delay: 0.15 + i * 0.1, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.9, delay: 0.15 + i * 0.1, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
 
 function HeroBg({
   springX,
   springY,
+  reduce,
 }: {
   springX: ReturnType<typeof useSpring>;
   springY: ReturnType<typeof useSpring>;
+  reduce: boolean;
 }) {
   const circleX = useTransform(springX, [-0.5, 0.5], ['-20px', '20px']);
   const circleY = useTransform(springY, [-0.5, 0.5], ['-14px', '14px']);
@@ -62,7 +64,7 @@ function HeroBg({
   const blob2Y = useTransform(springY, [-0.5, 0.5], ['18px', '-18px']);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+    <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden select-none">
 
       {/* Soft warm base wash */}
       <div className="absolute inset-0 bg-gradient-to-br from-amber-50/40 via-white to-neutral-50" />
@@ -70,7 +72,7 @@ function HeroBg({
       {/* Aurora blob — amber */}
       <motion.div
         style={{ x: blobX, y: blobY }}
-        animate={{ scale: [1, 1.08, 1], opacity: [0.55, 0.75, 0.55] }}
+        animate={reduce ? { opacity: 0.6 } : { scale: [1, 1.08, 1], opacity: [0.55, 0.75, 0.55] }}
         transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
         className="absolute -top-[20vw] -left-[15vw] w-[80vw] h-[80vw] sm:w-[60vw] sm:h-[60vw] rounded-full bg-amber-200/45 blur-[120px]"
       />
@@ -78,7 +80,7 @@ function HeroBg({
       {/* Aurora blob — cool slate */}
       <motion.div
         style={{ x: blob2X, y: blob2Y }}
-        animate={{ scale: [1, 1.12, 1], opacity: [0.4, 0.6, 0.4] }}
+        animate={reduce ? { opacity: 0.5 } : { scale: [1, 1.12, 1], opacity: [0.4, 0.6, 0.4] }}
         transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         className="absolute -bottom-[25vw] -right-[10vw] w-[70vw] h-[70vw] sm:w-[55vw] sm:h-[55vw] rounded-full bg-neutral-300/40 blur-[140px]"
       />
@@ -218,7 +220,10 @@ export function HeroSection() {
   const metaX = useTransform(springX, [-0.5, 0.5], ['5px', '-5px']);
   const metaY = useTransform(springY, [-0.5, 0.5], ['3px', '-3px']);
 
+  const reduce = useReducedMotion() ?? false;
+
   const onMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (reduce) return;
     const rect = sectionRef.current!.getBoundingClientRect();
     rawX.set((e.clientX - rect.left) / rect.width - 0.5);
     rawY.set((e.clientY - rect.top) / rect.height - 0.5);
@@ -228,8 +233,8 @@ export function HeroSection() {
     rawY.set(0);
   };
 
-  const s1 = useScramble('Shihaz');
-  const s2 = useScramble('Shaheem');
+  const s1 = useScramble('Shihaz', reduce);
+  const s2 = useScramble('Shaheem', reduce);
 
   return (
     <section
@@ -239,7 +244,7 @@ export function HeroSection() {
       onMouseLeave={onMouseLeave}
       className="relative min-h-[100svh] flex flex-col justify-between px-6 md:px-10 pt-28 md:pt-32 pb-10 md:pb-12 overflow-hidden"
     >
-      <HeroBg springX={springX} springY={springY} />
+      <HeroBg springX={springX} springY={springY} reduce={reduce} />
 
       {/* Metadata row — 2×2 on mobile, 4-col on md */}
       <motion.div
@@ -250,22 +255,22 @@ export function HeroSection() {
         className="relative max-w-7xl mx-auto w-full grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-xs uppercase tracking-[0.12em] md:tracking-[0.2em] text-neutral-500"
       >
         <div>
-          <p className="text-neutral-400 mb-1">Index</p>
+          <p className="text-neutral-500 mb-1">Index</p>
           <p className="text-black">001 / Portfolio</p>
         </div>
         <div>
-          <p className="text-neutral-400 mb-1">Discipline</p>
+          <p className="text-neutral-500 mb-1">Discipline</p>
           <p className="text-black">AI · Software</p>
         </div>
         <div>
-          <p className="text-neutral-400 mb-1">Based</p>
+          <p className="text-neutral-500 mb-1">Based</p>
           <p className="text-black">Colombo, LK</p>
         </div>
         <div>
-          <p className="text-neutral-400 mb-1">Status</p>
+          <p className="text-neutral-500 mb-1">Status</p>
           <p className="text-black flex items-center gap-2">
             <span className="relative flex w-2 h-2 shrink-0">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
             Available — 2026
@@ -278,13 +283,14 @@ export function HeroSection() {
         style={{ x: nameX, y: nameY }}
         className="relative max-w-7xl mx-auto w-full py-6 md:py-8"
       >
-        <h1 className="text-[18vw] sm:text-[16vw] md:text-[13vw] leading-[0.88] tracking-tight text-black">
+        <h1 aria-label="Shihaz Shaheem" className="text-[18vw] sm:text-[16vw] md:text-[13vw] leading-[0.88] tracking-tight text-black">
           {[
             { word: 'Shihaz', scramble: s1 },
             { word: 'Shaheem', scramble: s2 },
           ].map(({ word, scramble }, i) => (
             <span
               key={word}
+              aria-hidden="true"
               className="block overflow-hidden pb-[0.06em] cursor-default"
               onMouseEnter={scramble.trigger}
               onClick={scramble.trigger}
@@ -310,11 +316,12 @@ export function HeroSection() {
         transition={{ duration: 1, delay: 1.1 }}
         className="relative max-w-7xl mx-auto w-full flex flex-col md:grid md:grid-cols-3 gap-6 md:gap-8 items-start md:items-end"
       >
-        <div className="md:col-span-2 max-w-xl">
-          <p className="text-sm md:text-xl text-neutral-700 leading-relaxed">
-            An IT undergraduate at <span className="text-black">SLIIT</span> specializing
-            in Artificial Intelligence — designing intelligent systems, exploring data,
-            and crafting interfaces with intent.
+        <div className="md:col-span-2 max-w-2xl">
+          <p className="text-base md:text-xl text-neutral-700 leading-relaxed">
+            I build retrieval and agent systems, Spring Boot backends, and AI that runs on
+            real hardware. Founder of <span className="text-black">AlchemyX Global</span>,
+            building AI systems for businesses, and an IT undergraduate at{' '}
+            <span className="text-black">SLIIT</span> specialising in AI.
           </p>
         </div>
         <div className="flex md:justify-end">

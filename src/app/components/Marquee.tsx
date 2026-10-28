@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { motion, useAnimationControls } from 'motion/react';
+import { motion, useAnimationControls, useReducedMotion } from 'motion/react';
 
 const ITEMS = [
-  'Machine Learning',
-  'Neural Networks',
-  'Full Stack',
-  'Data Science',
+  'RAG & Retrieval',
+  'AI Agents',
   'Computer Vision',
-  'Research',
-  'TypeScript',
-  'Python',
+  'Deep Learning',
+  'Voice AI',
+  'Spring Boot',
+  'React',
+  'IoT & ESP32',
 ];
 
 const DURATION = 30;
@@ -17,8 +17,14 @@ const DURATION = 30;
 export function Marquee() {
   const controls = useAnimationControls();
   const [hovered, setHovered] = useState(false);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
+    if (reduce) {
+      controls.stop();
+      controls.set({ x: '0%' });
+      return;
+    }
     controls.start({
       x: ['0%', '-50%'],
       transition: {
@@ -28,7 +34,7 @@ export function Marquee() {
         repeatType: 'loop',
       },
     });
-  }, [hovered, controls]);
+  }, [hovered, controls, reduce]);
 
   return (
     <div
@@ -43,6 +49,7 @@ export function Marquee() {
         {[...ITEMS, ...ITEMS].map((item, i) => (
           <div
             key={i}
+            aria-hidden={i >= ITEMS.length ? true : undefined}
             className="flex items-center gap-10 md:gap-12 text-2xl sm:text-3xl md:text-5xl text-black tracking-tight"
           >
             <motion.span
@@ -52,7 +59,7 @@ export function Marquee() {
             >
               {item}
             </motion.span>
-            <span className="text-amber-300">✦</span>
+            <span aria-hidden="true" className="text-neutral-300">✦</span>
           </div>
         ))}
       </motion.div>

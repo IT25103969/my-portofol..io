@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
 type Props = {
@@ -9,6 +9,10 @@ type Props = {
 };
 
 export function SectionReveal({ children, delay = 0, y = 40, className }: Props) {
+  // Skip the blur/fade entirely for reduced-motion users so content is immediately readable
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+
   return (
     <motion.div
       className={className}

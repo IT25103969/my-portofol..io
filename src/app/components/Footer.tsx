@@ -1,5 +1,6 @@
 import { Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
+import { ContactForm } from './ContactForm';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -7,8 +8,8 @@ export function Footer() {
   return (
     <footer id="contact" className="bg-black text-white px-6 md:px-10 pt-16 md:pt-32 pb-10">
       <div className="max-w-7xl mx-auto">
-        <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 mb-6 md:mb-8">
-          — Contact (04)
+        <p className="text-xs uppercase tracking-[0.2em] text-neutral-400 mb-6 md:mb-8">
+          — Contact (06)
         </p>
 
         <motion.h2
@@ -29,12 +30,15 @@ export function Footer() {
         >
           <span className="flex-1 min-w-0">theshihaz6@gmail.com</span>
           <ArrowUpRight
+            aria-hidden="true"
             className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-45 transition-transform duration-500 shrink-0 mt-1"
             strokeWidth={1.25}
           />
         </a>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 md:pt-12 border-t border-neutral-800">
+        <ContactForm />
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-8 md:pt-12 border-t border-neutral-800">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 mb-3">Social</p>
             <div className="space-y-1 md:space-y-3">
@@ -44,7 +48,8 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
               >
-                <Github className="w-4 h-4 shrink-0" /> GitHub
+                <Github className="w-4 h-4 shrink-0" aria-hidden="true" /> GitHub
+                <span className="sr-only">(opens in a new tab)</span>
               </a>
               <a
                 href="https://www.linkedin.com/in/shihaz-shaheem-024679242/"
@@ -52,13 +57,14 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
               >
-                <Linkedin className="w-4 h-4 shrink-0" /> LinkedIn
+                <Linkedin className="w-4 h-4 shrink-0" aria-hidden="true" /> LinkedIn
+                <span className="sr-only">(opens in a new tab)</span>
               </a>
               <a
                 href="mailto:theshihaz6@gmail.com"
                 className="flex items-center gap-2 text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
               >
-                <Mail className="w-4 h-4 shrink-0" /> Email
+                <Mail className="w-4 h-4 shrink-0" aria-hidden="true" /> Email
               </a>
             </div>
           </div>
@@ -84,6 +90,18 @@ export function Footer() {
               >
                 Work
               </a>
+              <a
+                href="#journey"
+                className="block text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
+              >
+                Journey
+              </a>
+              <a
+                href="#notes"
+                className="block text-sm text-white hover:text-neutral-400 active:text-neutral-400 transition-colors py-2.5 md:py-0.5"
+              >
+                Notes
+              </a>
             </div>
           </div>
 
@@ -93,13 +111,6 @@ export function Footer() {
             <p className="text-sm text-neutral-500">Sri Lanka</p>
           </div>
 
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 mb-3">Status</p>
-            <p className="flex items-center gap-2 text-sm text-white">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              Available — 2026
-            </p>
-          </div>
         </div>
 
         <div className="mt-10 md:mt-16 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between gap-2 text-xs text-neutral-500">

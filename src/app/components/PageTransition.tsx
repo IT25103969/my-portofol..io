@@ -1,19 +1,42 @@
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
+const INTRO_KEY = 'ss-intro-seen';
+
+function hasSeenIntro() {
+  try {
+    return sessionStorage.getItem(INTRO_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function markIntroSeen() {
+  try {
+    sessionStorage.setItem(INTRO_KEY, '1');
+  } catch {
+    /* storage unavailable (private mode); the intro just shows again */
+  }
+}
+
 export function PageTransition() {
-  const [show, setShow] = useState(true);
+  const reduce = useReducedMotion();
+  // Only greet first-time visitors in a session; repeat visits go straight to content
+  const [show, setShow] = useState(() => !reduce && !hasSeenIntro());
 
   useEffect(() => {
+    if (!show) return;
+    markIntroSeen();
     const t = setTimeout(() => setShow(false), 1100);
     return () => clearTimeout(t);
-  }, []);
+  }, [show]);
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
           key="page-curtain"
+          aria-hidden="true"
           className="fixed inset-0 z-[100] flex items-center justify-center bg-white"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
