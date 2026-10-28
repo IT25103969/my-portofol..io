@@ -1,0 +1,18 @@
+{
+  "title": "Shihaz Shaheem — AI & Software Engineer",
+  "description": "Portfolio of Shihaz Shaheem, founder of AlchemyX Global and an IT undergraduate at SLIIT specialising in AI. Work in RAG and agentic systems, Spring Boot backends and ESP32 IoT.",
+  "language": "en",
+  "robots": {
+    "index": true
+  },
+  "icons": {
+    "icon": "/favicon.svg"
+  },
+  "openGraph": {
+    "image": "/og-image.jpg"
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
